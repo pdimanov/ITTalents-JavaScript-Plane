@@ -13,6 +13,13 @@ var direction = {
 	down: false
 };
 
+var border = {
+	left: 0,
+	top: window.innerHeight - 75,
+	bottom: 0,
+	right: window.innerWidth - 101
+}
+
 function planeDirection(key, bool){
 	switch(key){
 		case 37:
@@ -43,16 +50,16 @@ window.addEventListener('load', function(){
 	}, false);
 
 	setInterval(function(){
-		if(direction.left){
+		if(direction.left && planeLeft > border.left){
 			planeLeft -= pace;
 		}
-		if(direction.up){
+		if(direction.up && planeBottom < border.top){
 			planeBottom += pace;
 		}
-		if(direction.right){
+		if(direction.right && planeLeft < border.right){
 			planeLeft += pace;
 		}
-		if(direction.down){
+		if(direction.down && planeBottom > border.bottom){
 			planeBottom -= pace;
 		}
 
