@@ -1,5 +1,9 @@
 var plane = document.getElementById('plane');
-var target = document.getElementById('target');
+	target = document.getElementById('target');
+	pointsContainer = document.getElementById('points');
+	magazineContainer = document.getElementById('magazine'),
+	endScreen = document.getElementById('end-screen'),
+	points = 0;
 
 var planeLeft = window.innerWidth/2 - 50;
 plane.style.left = planeLeft + 'px';
@@ -56,6 +60,7 @@ function planeShooting(key, bool){
 }
 
 function shootBullet(){
+	magazine--;
 	var bullet = {
 		div: document.createElement('div'),
 		leftPos: planeLeft + 49,
@@ -76,6 +81,12 @@ function updatingBullets(){
 			element.botPos += bulletPace;
 			element.div.style.bottom = element.botPos + 'px';
 
+
+			if(element.botPos > border.top - 80 && element.leftPos >= targetPos && element.leftPos <= targetPos + 100){
+				hitTarget();
+				bullets.shift();
+				element.div.parentNode.removeChild(element.div);
+			}
 			if(element.botPos > border.top + 75){
 				bullets.shift();
 				element.div.parentNode.removeChild(element.div);
@@ -100,6 +111,20 @@ function movingTarget(){
 	target.style.left = targetPos + 'px';
 }
 
+function hitTarget(){
+	points++;
+	target.src = 'img/Trump-hit.png';
+	setTimeout(function(){
+		target.src = 'img/Trump-normal.png'
+	}, 400);
+	console.log(points);
+}
+
+function updatingStats(){
+	pointsContainer.innerHTML = 'Your points: ' + points;
+	magazineContainer.innerHTML = 'Bullets left: ' + magazine;
+}
+
 window.addEventListener('load', function(){
 
 	document.addEventListener('keydown', function(event){
@@ -111,7 +136,7 @@ window.addEventListener('load', function(){
 		planeShooting(event.keyCode, true);
 	}, false);
 
-	setInterval(function(){
+	var movingPlane = setInterval(function(){
 		if(direction.left && planeLeft > border.left){
 			planeLeft -= planePace;
 		}
@@ -130,9 +155,21 @@ window.addEventListener('load', function(){
 
 		updatingBullets();
 		movingTarget();
+		updatingStats();
+
+		// GAME OVER
+		if(points == 70 || magazine == 0){
+			clearInterval(movingPlane);
+			endScreen.style.display = 'block';
+			if(points == 70){
+				endScreen.innerHTML = 'YOU WON!';
+			} else {
+				endScreen.innerHTML = 'Sorry, you lost.';
+			}
+		}
 	}, 1000/60)
 
-	setInterval(function(){
+	var shootingPlane = setInterval(function(){
 		if(isShooting){
 			shootBullet();
 			console.log('shooting');

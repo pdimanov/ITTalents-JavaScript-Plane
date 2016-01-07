@@ -4,34 +4,51 @@
 	<meta charset="UTF-8">
 	<title>Plane</title>
 	<style>
-		#plane {
-			position: absolute;
-		}
+	#plane {
+		position: absolute;
+	}
 
-		#target {
-			position: absolute;
-		}
+	#target {
+		position: absolute;
+	}
 
-		body {
-			background-color: lightblue;
-		}
+	body {
+		background-color: lightblue;
+	}
 
-		.bullet {
-			width: 2px;
-			height: 12px;
-			background-color: black;
-			position: absolute;
-		}
+	.bullet {
+		width: 2px;
+		height: 12px;
+		background-color: black;
+		position: absolute;
+	}
+
+	#stats {
+		position: absolute;
+		top: 30%;
+	}
+
+	#end-screen {
+		display: none;
+		position: absolute;
+		top: 40%;
+		left: 27%;
+		color: red;
+		font-size: 5em;
+	}
 	</style>
 </head>
 <body>
 	<div id="root">
-		<div id="target">
-			<img src="img/Trump-normal.png" alt="">
-		</div>
+		<img id="target" src="img/Trump-normal.png" alt="">
 		<div id="plane">
 			<img src="img/plane.png" alt="">
 		</div>
+		<div id="stats">
+			<div id="points"></div>
+			<div id="magazine"></div>
+		</div>
+		<h1 id="end-screen"></h1>
 	</div>
 
 	<script src="js/plane.js"></script>
