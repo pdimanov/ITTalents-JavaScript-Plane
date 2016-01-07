@@ -81,7 +81,6 @@ function updatingBullets(){
 			element.botPos += bulletPace;
 			element.div.style.bottom = element.botPos + 'px';
 
-
 			if(element.botPos > border.top - 80 && element.leftPos >= targetPos && element.leftPos <= targetPos + 100){
 				hitTarget();
 				bullets.shift();
@@ -117,7 +116,6 @@ function hitTarget(){
 	setTimeout(function(){
 		target.src = 'img/Trump-normal.png'
 	}, 400);
-	console.log(points);
 }
 
 function updatingStats(){
@@ -172,7 +170,6 @@ window.addEventListener('load', function(){
 	var shootingPlane = setInterval(function(){
 		if(isShooting){
 			shootBullet();
-			console.log('shooting');
 			isShooting = false;
 		}
 	}, 100);
