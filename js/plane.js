@@ -1,4 +1,5 @@
 var plane = document.getElementById('plane');
+var target = document.getElementById('target');
 
 var planeLeft = window.innerWidth/2 - 50;
 plane.style.left = planeLeft + 'px';
@@ -13,12 +14,16 @@ var planePace = 3,
 	down: false
 };
 
+var targetPace = 5,
+	targetPos = 1,
+	changeDirection = -1;
+
 var border = {
 	left: 0,
 	top: window.innerHeight - 75,
 	bottom: 0,
 	right: window.innerWidth - 101
-}
+};
 
 var isShooting = false,
 	bullets = [],
@@ -79,6 +84,22 @@ function updatingBullets(){
 	}
 }
 
+function movingTarget(){
+	var	targetBorder = {
+			left: 0,
+			right: border.right
+	};
+
+	if(targetPos >= targetBorder.right){
+		targetPace *= changeDirection;
+	} else if(targetPos <= targetBorder.left){
+		targetPace *= changeDirection;
+	}
+
+	targetPos += targetPace;
+	target.style.left = targetPos + 'px';
+}
+
 window.addEventListener('load', function(){
 
 	document.addEventListener('keydown', function(event){
@@ -94,7 +115,7 @@ window.addEventListener('load', function(){
 		if(direction.left && planeLeft > border.left){
 			planeLeft -= planePace;
 		}
-		if(direction.up && planeBottom < border.top){
+		if(direction.up && planeBottom < border.top/2){
 			planeBottom += planePace;
 		}
 		if(direction.right && planeLeft < border.right){
@@ -108,6 +129,7 @@ window.addEventListener('load', function(){
 		plane.style.bottom = planeBottom + 'px';
 
 		updatingBullets();
+		movingTarget();
 	}, 1000/60)
 
 	setInterval(function(){
